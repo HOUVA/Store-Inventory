@@ -1,0 +1,8 @@
+
+Type 'Help' to see this message again
+Type 'Add' to add a new item
+Type 'Delete' to remove an item 
+Type 'Update' to change the name or the price of an item
+Type 'Sum' to calculate the total price for your list.
+Type 'Print' to export your list to a file
+Type 'Done' to end this program
