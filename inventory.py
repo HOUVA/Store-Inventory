@@ -1,4 +1,5 @@
 from item import Item
+import csv
 
 """
 Store Inventory
@@ -11,11 +12,7 @@ What about deleting items? ✔️
 """
 
 class StoreInventory: 
-    inventory_list = [
-        {'name': 'Milk', 'price': '2.29', 'quantity': '2'},
-        {'name': 'Eggs', 'price': '3.49', 'quantity': '3'},
-        {'name': 'Cheese', 'price': '4.49', 'quantity': '1'}
-    ]
+    inventory_list = []
     finished = False
 
     def __init__(self) -> None:
@@ -62,6 +59,8 @@ class StoreInventory:
             self.inventory_list.append(self.add_item())
         elif command.__contains__('PRINT'):
             self.export_items()
+        elif command.__contains__('IMPORT'):
+            self.inventory_list = self.csv_file_reader()
         else: 
             print('Not a valid option, type help for more info')
 
@@ -116,7 +115,29 @@ class StoreInventory:
             total += float(item['price']) * int(item['quantity'])
         total = round(total, 2)
         return f'\nTotal: ${total}'
+
+    # reads a csv file and returns a list of dictionaries
+    def csv_file_reader(self):
+        new_list = []
+        new_dict_list = []
+        with open('inventory.csv', newline='') as csvfile:
+            invt_reader = csv.reader(csvfile, delimiter=',')
+            for row in invt_reader:
+                new_list.append(row)
+
+        for i in range(2,len(new_list)):
+            new_dict_list.append({
+                'name': new_list[i][0],
+                'price': new_list[i][1],
+                'quantity': new_list[i][2],
+            })
+        return new_dict_list
     
+
+    def csv_file_writer(self):
+        pass
+
+
     # exports the dict object to a txt file
     def export_items(self):
         txt_file = open('inventory.txt', 'w')
@@ -132,6 +153,7 @@ class StoreInventory:
 if __name__ == '__main__':
     inventory = StoreInventory()
     inventory.start_app()
+    inventory.csv_file_reader()
 
 
 
