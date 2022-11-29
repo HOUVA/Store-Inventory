@@ -37,7 +37,7 @@ class TestInventory(TestCase):
         self.assertNotIn(self.control_dicts[1], self.inventory_list)
 
     # validates method will return a string if the input passed is not found in name key in list
-    @mock.patch('inventory.delete_item.input', side_effect='Milk')
+    @mock.patch('inventory.input', side_effect='Milk')
     def test_not_delete_item_not_in_list(self, mock_input):
         self.inventory_list = []
         self.assertEqual(self.inventory.delete_item(), 'Item not found in list')

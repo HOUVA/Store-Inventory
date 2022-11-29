@@ -119,15 +119,11 @@ class StoreInventory:
         input_val = input('Which item would you like to delete?: ').capitalize()
         if self.inventory_list:
             for item in self.inventory_list:
-                try: 
-                    del self.inventory_list[self.inventory_list.index(item)]
-                except ValueError: 
-                    pass
-                """if input_val in item['name']:
+                if input_val == item['name']:
                     del self.inventory_list[self.inventory_list.index(item)]
                     return 'Successfully deleted'
                 else:
-                    return 'Item not found in list'"""           
+                    return 'Item not found in list'            
         else:
             return 'There is nothing to delete'
         
