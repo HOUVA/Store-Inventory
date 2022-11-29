@@ -13,7 +13,10 @@ What about deleting items? ✔️
 
 class StoreInventory: 
     inventory_list = [
-        {'name': 'Milk', 'price': '2.29', 'quantity': '3'}
+            {'name': 'Milk', 'price': '2.29', 'quantity': '2'},
+            {'name': 'Eggs', 'price': '3.49', 'quantity': '3'},
+            {'name': 'Cheese', 'price': '4.49', 'quantity': '1'},
+            {'name': 'Bread', 'price': '$5.49', 'quantity': '4'}
     ]
     finished = False
     command_options = ['HELP', 'DONE', 'ADD', 'DELETE', 'CLEAR', 
@@ -47,7 +50,6 @@ class StoreInventory:
         else: 
             print('Enter a valid input')
         
-
 
     # Takes user input and depending on the value, executes the correct method.
     def command_manager(self, command):
@@ -88,9 +90,10 @@ class StoreInventory:
     # creates a new dict object containing the name and price keys.
     # Item class creates the dict and can be called using create_dict_obj()
     def add_item(self): 
-        name = input('Name: ').capitalize()
+        name = input('Name: ')
         price = input('Price: ')
         quantity = input('Quantity: ')
+
         checker = False
         for item in self.inventory_list:
             for key in item.keys():
@@ -117,15 +120,15 @@ class StoreInventory:
     # Removes an Item dict object from the list, based on the user key input value
     def delete_item(self):
         input_val = input('Which item would you like to delete?: ').capitalize()
-        if self.inventory_list:
-            for item in self.inventory_list:
-                if input_val == item['name']:
-                    del self.inventory_list[self.inventory_list.index(item)]
-                    return 'Successfully deleted'
-                else:
-                    return 'Item not found in list'            
-        else:
-            return 'There is nothing to delete'
+        #if self.inventory_list:
+        for item in self.inventory_list:
+            if input_val == item['name']:
+                del self.inventory_list[self.inventory_list.index(item)]
+                return 'Successfully deleted'
+            else:
+                return 'Item not found in list'            
+        #else:
+            #return 'There is nothing to delete'
         
 
 
