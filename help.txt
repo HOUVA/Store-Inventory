@@ -1,8 +1,11 @@
 
 Type 'Help' to see this message again
+Type 'Import' to import from an existing csv file
+Type 'Export' to export to an existing csv file
 Type 'Add' to add a new item
 Type 'Delete' to remove an item 
-Type 'Update' to change the name or the price of an item
+Type 'Clear' to remove all items in the list
+Type 'Update' to update a current item in the list
 Type 'Sum' to calculate the total price for your list.
-Type 'Print' to export your list to a file
+Type 'Print' to print your list to a txt file
 Type 'Done' to end this program

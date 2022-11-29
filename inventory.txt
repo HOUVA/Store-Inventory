@@ -1,8 +1,10 @@
         ---List---
 
 Milk      | $2.29  | 2  |
-Total: $36.15Eggs      | $3.49  | 3  |
-Total: $36.15Cheese    | $4.49  | 1  |
-Total: $36.15Bread     | $2.29  | 4  |
-Total: $36.15Tomatoes  | $1.49  | 5  |
-Total: $36.15
+Eggs      | $3.49  | 3  |
+Cheese    | $4.49  | 1  |
+Bread     | $5.49  | 2  |
+Yogurt    | $2.49  | 5  |
+Hot Dogs  | $5.49  | 2   |
+
+Total: $53.95
