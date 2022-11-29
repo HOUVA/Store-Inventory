@@ -16,7 +16,7 @@ class StoreInventory:
             {'name': 'Milk', 'price': '2.29', 'quantity': '2'},
             {'name': 'Eggs', 'price': '3.49', 'quantity': '3'},
             {'name': 'Cheese', 'price': '4.49', 'quantity': '1'},
-            {'name': 'Bread', 'price': '$5.49', 'quantity': '4'}
+            {'name': 'Bread', 'price': '5.49', 'quantity': '4'}
     ]
     finished = False
     command_options = ['HELP', 'DONE', 'ADD', 'DELETE', 'CLEAR', 
@@ -91,9 +91,6 @@ class StoreInventory:
     # Item class creates the dict and can be called using create_dict_obj()
     def add_item(self): 
         name = input('Name: ')
-        price = input('Price: ')
-        quantity = input('Quantity: ')
-
         checker = False
         for item in self.inventory_list:
             for key in item.keys():
@@ -102,6 +99,8 @@ class StoreInventory:
         if checker: 
             print('You already have that item in this List\nIf you want to update the current item, type update')
         else:
+            price = input('Price: ')
+            quantity = input('Quantity: ')
             self.inventory_list.append(Item(name=name,price=price,quantity=quantity).create_dict_obj())
     
 
