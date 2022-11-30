@@ -12,12 +12,7 @@ What about deleting items? ✔️
 """
 
 class StoreInventory: 
-    inventory_list = [
-            {'name': 'Milk', 'price': '2.29', 'quantity': '2'},
-            {'name': 'Eggs', 'price': '3.49', 'quantity': '3'},
-            {'name': 'Cheese', 'price': '4.49', 'quantity': '1'},
-            {'name': 'Bread', 'price': '5.49', 'quantity': '4'}
-    ]
+    inventory_list = []
     finished = False
     command_options = ['HELP', 'DONE', 'ADD', 'DELETE', 'CLEAR', 
                        'UPDATE', 'IMPORT', 'EXPORT', 'PRINT']
@@ -44,7 +39,6 @@ class StoreInventory:
         
     def validate_input(self): 
         command = input('\nCommand: ').upper()
-
         if command in self.command_options:
             self.command_manager(command)
         else: 
@@ -118,16 +112,16 @@ class StoreInventory:
 
     # Removes an Item dict object from the list, based on the user key input value
     def delete_item(self):
-        input_val = input('Which item would you like to delete?: ').capitalize()
-        #if self.inventory_list:
-        for item in self.inventory_list:
-            if input_val == item['name']:
-                del self.inventory_list[self.inventory_list.index(item)]
-                return 'Successfully deleted'
-            else:
-                return 'Item not found in list'            
-        #else:
-            #return 'There is nothing to delete'
+        if self.inventory_list:
+            input_val = input('Which item would you like to delete?: ').capitalize()
+            for item in self.inventory_list:
+                if input_val == item['name']:
+                    del self.inventory_list[self.inventory_list.index(item)]
+                    return 'Successfully deleted'
+                else:
+                    return 'Item not found in list'            
+        else:
+            return 'There is nothing to delete'
         
 
 
