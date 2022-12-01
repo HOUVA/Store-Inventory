@@ -15,7 +15,7 @@ class TestInventory(TestCase):
             {'name': 'Milk', 'price': '2.29', 'quantity': '2'},
             {'name': 'Eggs', 'price': '3.49', 'quantity': '3'},
             {'name': 'Cheese', 'price': '4.49', 'quantity': '1'},
-            {'name': 'Bread', 'price': '$5.49', 'quantity': '4'}
+            {'name': 'Bread', 'price': '5.49', 'quantity': '4'}
         ]
 
     # validates method will return a dictionary if the name does not exist
@@ -81,6 +81,10 @@ class TestInventory(TestCase):
             control_inventory.validate_input()
             control_print = 'Enter a valid input'
             mocked_print.assert_called_with(control_print)
+
+    # validates methof will execute create_
+    def test_start(self):
+        pass
         
 
 if __name__ == '__main__':

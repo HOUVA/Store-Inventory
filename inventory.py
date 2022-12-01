@@ -1,5 +1,6 @@
 from item import Item
 import csv
+import datetime
 
 """
 Store Inventory
@@ -12,6 +13,7 @@ What about deleting items? ✔️
 """
 
 class StoreInventory: 
+    datetime_obj = datetime.datetime.now()
     inventory_list = []
     finished = False
     command_options = ['HELP', 'DONE', 'ADD', 'DELETE', 'CLEAR', 
@@ -24,6 +26,10 @@ class StoreInventory:
             self.create_grid()
             self.validate_input()
         self.create_grid()
+        if self.finished: 
+            date = str(self.datetime_obj.date())
+            time = str(self.datetime_obj.time().strftime('%I:%M'))
+            print(f'Done - {date} {time}')
 
     # Creates a grid in the terminal
     def create_grid(self):
@@ -54,15 +60,9 @@ class StoreInventory:
         elif command.__contains__('DELETE'):
             print(self.delete_item())
         elif command.__contains__('CLEAR'):
-            if self.inventory_list:
-                self.clear_items()
-            else: 
-                print('Your list is already empty')
+            print(self.clear_items())
         elif command.__contains__('UPDATE'):
-            if self.inventory_list:
-                self.update_item()
-            else:
-                print('\nNo items to update\n')
+            self.update_item()
         elif command.__contains__('ADD'):
             self.add_item()
         elif command.__contains__('EXPORT'):
@@ -95,19 +95,27 @@ class StoreInventory:
         else:
             price = input('Price: ')
             quantity = input('Quantity: ')
-            self.inventory_list.append(Item(name=name,price=price,quantity=quantity).create_dict_obj())
+            new_item = Item(name=name,price=price,quantity=quantity)
+            self.inventory_list.append(new_item.create_dict_obj())
     
 
     # changes either the name or price of the object selected
     # input is case sensitive
     def update_item(self):
-        input_val = input('Which item would you like to update?: ')
-        changed_val_type = input('What would you like to update? (name/price/quantity/both): ').lower()
-        new_val = input("New Value: ")
-        for items in self.inventory_list:
-            for key in items.keys(): 
-                if input_val in items[key]:
-                    items[changed_val_type] = new_val
+        if self.inventory_list:
+            checker = False
+            input_val = input('Which item would you like to update?: ')
+            changed_val_type = input('What would you like to update? (name/price/quantity/both): ').lower()
+            new_val = input("New Value: ")
+            for items in self.inventory_list:
+                for key in items.keys(): 
+                    if input_val in items[key]:
+                        items[changed_val_type] = new_val
+                        checker = True
+            if not checker: 
+                print('Item not found in list')
+        else: 
+            print('Your list is empty')
 
 
     # Removes an Item dict object from the list, based on the user key input value
@@ -127,7 +135,12 @@ class StoreInventory:
 
     # deletes all items in the list
     def clear_items(self):
-        self.inventory_list = []
+        if self.inventory_list:
+            self.inventory_list = []
+            return 'cleared successfully'
+        else:
+            return 'List is already empty'
+
 
 
     # adds the price values for each dict object and displays the total at the 
@@ -182,8 +195,7 @@ class StoreInventory:
 if __name__ == '__main__':
     inventory = StoreInventory()
     inventory.start_app()
-    #inventory.csv_file_writer()
-    print(inventory.inventory_list)
+
 
 
 
