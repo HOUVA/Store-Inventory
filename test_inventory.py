@@ -6,7 +6,6 @@ import io
 
 class TestInventory(TestCase):
     def setUp(self) -> None:
-
         self.control_dicts = [
             {'name': 'Beef', 'price': '2.29','quantity': '3'},
             {'name': 'Milk', 'price': '2.29', 'quantity': '2'}                 
@@ -82,10 +81,80 @@ class TestInventory(TestCase):
             control_print = 'Enter a valid input'
             mocked_print.assert_called_with(control_print)
 
-    # validates methof will execute create_
-    def test_start(self):
-        pass
-        
+    # validates method will execute create_grid() when self.finished is false
+    """@mock.patch('inventory.StoreInventory.create_grid')
+    def test_start(self, mocked_create_grid):
+        with mock.patch('inventory.StoreInventory.validate_input') as mocked_validate_input:
+            control_inventory = inventory.StoreInventory()
+            control_inventory.start_app()
+            self.assertTrue(mocked_create_grid.called)"""
+
+    # validates method will excecute help method when "HELP" is passed as an arguement
+    @mock.patch('inventory.StoreInventory.help')
+    def test_command_manager_help(self, mocked_help):
+        control_inventory = inventory.StoreInventory()
+        control_inventory.command_manager('HELP')
+        self.assertTrue(mocked_help.called)
+
+    # validates method will set value of self.finished to True
+    def test_command_manager_done(self):
+        control_inventory = inventory.StoreInventory()
+        control_inventory.command_manager('DONE')
+        self.assertTrue(control_inventory.finished)
+
+    @mock.patch('inventory.StoreInventory.delete_item', return_value='Passed')
+    def test_command_manager_delete(self, mocked_delete):
+        with mock.patch('builtins.print') as mocked_print:
+            control_inventory = inventory.StoreInventory()
+            control_inventory.command_manager('DELETE')
+            mocked_print.assert_called_with('Passed')
+
+    # validates method will remove all items from the list when 'CLEAR' is passed as an arguement
+    @mock.patch('builtins.print')
+    def test_command_manager_clear(self, mocked_print):
+        control_inventory = inventory.StoreInventory()
+        control_inventory.command_manager('CLEAR')
+        mocked_print.assert_called_with('cleared successfully')
+        self.assertFalse(control_inventory.inventory_list)
+
+    # validates method will execute the correct method when 'UPDATE' is passed as a parameter
+    @mock.patch('inventory.StoreInventory.update_item')
+    def test_command_manager_update(self, mock_update_item):
+        control = inventory.StoreInventory()
+        control.command_manager('UPDATE')
+        self.assertTrue(mock_update_item.called)
+
+    # validates method will execute the correct method when 'ADD' is passed as an arguement
+    @mock.patch('inventory.StoreInventory.add_item')
+    def test_command_manager_add(self, mock_add):
+        control = inventory.StoreInventory()
+        control.command_manager('ADD')
+        self.assertTrue(mock_add.called)
+    
+    # validates method will collect user input and execute correct method when 'export' is passed as an arguement
+    @mock.patch('builtins.input', return_value='inventory.csv')
+    def test_command_manager_export(self, mock_input):
+        with mock.patch('inventory.StoreInventory.csv_file_writer') as mock_csv_w:
+            control = inventory.StoreInventory()
+            control.command_manager('EXPORT')
+            self.assertTrue(mock_csv_w.called)
+
+    # validates method will collect user input and execute correct method when 'IMPORT' is passed as an arguement
+    @mock.patch('builtins.input', return_value='new_inventory.csv')
+    def test_command_manager_import(self, mock_input):
+        with mock.patch('inventory.StoreInventory.csv_file_reader') as mock_csv_r:
+            control = inventory.StoreInventory()
+            control.command_manager('IMPORT')
+            self.assertTrue(mock_csv_r.called)
+
+    # validates method will execute correct method when 'PRINT' is passed as an arguement
+    @mock.patch('inventory.StoreInventory.print_items')
+    def test_command_manager_print(self, mock_print):
+        control = inventory.StoreInventory()
+        control.command_manager('PRINT')
+        self.assertTrue(mock_print.called)
+
+            
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main() 
