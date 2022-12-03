@@ -2,9 +2,11 @@ import unittest
 from unittest import TestCase
 from unittest import mock
 import inventory
-import io
+import tracemalloc
 
 class TestInventory(TestCase):
+    tracemalloc.start()
+
     def setUp(self) -> None:
         self.control_dicts = [
             {'name': 'Beef', 'price': '2.29','quantity': '3'},
@@ -17,6 +19,15 @@ class TestInventory(TestCase):
             {'name': 'Bread', 'price': '5.49', 'quantity': '4'}
         ]
 
+    # validates method is reading from correct txt.file
+    @mock.patch('builtins.print')
+    def test_help(self, mock_print):
+        control = inventory.StoreInventory()
+        test_txt = open('mock_attributes/mock_help.txt', 'r')
+        txt = test_txt.read()
+        control.help()
+        mock_print.assert_called_with(txt)
+
     # validates method will return a dictionary if the name does not exist
     @mock.patch('builtins.input', side_effect=['Beef','2.29','3'])
     def test_add_item(self, mocked_input):
@@ -28,7 +39,7 @@ class TestInventory(TestCase):
     
     # validates method does not add dictionary to list if name already exists
     @mock.patch('builtins.input', side_effect=['Beef', '2.29', '3'])
-    def test_add_item_duplicate(self, mocked_input):
+    def test_not_add_item_duplicate(self, mocked_input):
         with mock.patch('builtins.print') as mock_print:
             inventory.StoreInventory().inventory_list = self.control_list
             inventory.StoreInventory().add_item()
@@ -154,6 +165,42 @@ class TestInventory(TestCase):
         control.command_manager('PRINT')
         self.assertTrue(mock_print.called)
 
+
+    # validates method will return a string containing the total price for all dictionary objects
+    def test_sum_of_items(self):
+        control = inventory.StoreInventory()
+        control.inventory_list = self.control_list
+        result = control.sum_of_items()
+        test_string = '\nTotal: $41.5'
+        self.assertEqual(test_string, result)
+    
+    # validates method will return a string showing the total as '0'
+    def test_sum_of_items_list_empty(self):
+        control = inventory.StoreInventory()
+        control.inventory_list = []
+        result = control.sum_of_items()
+        test_string = '\nTotal: $0'
+        self.assertEqual(test_string, result)
+
+    # validates method will remove all items in list if self.inventory_list is not empty
+    # also validates method will return a string
+    def test_clear_items_list_not_empty(self):
+        control = inventory.StoreInventory()
+        control.inventory_list = self.control_list
+        result = control.clear_items()
+        test_string = 'cleared successfully'
+        self.assertEqual(test_string, result)
+        self.assertFalse(control.inventory_list)
+
+    # validates method will return a string if self.inventory_list is already empty
+    def test_clear_items_list_empty(self):
+        control = inventory.StoreInventory()
+        control.inventory_list = []
+        result = control.clear_items()
+        test_string = 'List is already empty'
+        self.assertEqual(test_string, result)
+        
+        
             
 
 if __name__ == '__main__':

@@ -41,8 +41,10 @@ class StoreInventory:
                 print(item['name'] + ' ' * (10 - len(item['name'])) + '|' + 
                       ' $' + item['price'] + '  |' + 
                       ' ' + item['quantity'] + '  |')
-            print(self.sum_of_items())
+        print(self.sum_of_items())
         
+    # takes user input and checks if input value is a valid command. 
+    # if command is valid, executes command_manager with input value as arguement
     def validate_input(self): 
         command = input('\nCommand: ').upper()
         if command in self.command_options:
@@ -146,11 +148,14 @@ class StoreInventory:
     # adds the price values for each dict object and displays the total at the 
     # bottom of the list
     def sum_of_items(self):
-        total = 0
-        for item in self.inventory_list:
-            total += float(item['price']) * int(item['quantity'])
-        total = round(total, 2)
-        return f'\nTotal: ${total}'
+        if self.inventory_list:
+            total = 0
+            for item in self.inventory_list:
+                total += float(item['price']) * int(item['quantity'])
+            total = round(total, 2)
+            return f'\nTotal: ${total}'
+        else:
+            return '\nTotal: $0'
 
 
     # reads a csv file and returns a list of dictionaries
