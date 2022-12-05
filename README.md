@@ -3,39 +3,39 @@ inventory.py
 
 Classes: 
 
-	• StoreInventory
+	• StoreInventory(takes no parameters)
   
 Class based Object: 
 
-	• inventory_list : list of dictionaries for each item object
-	• Finished : boolean value for while loop in start_app (default is False)
-	• command_options : list of strings for each command option that is used is validate_input
+	• inventory_list: list of dictionaries for each item object
+	• finished: boolean value for while loop in start_app (default is False)
+	• command_options: list of strings for each command option that is used is validate_input
   
 Methods:
 
-	• start_app: (Takes no parameters) 
-  
+	• start_app(takes no parameters):
+
 		○ If self.finished is False, executes create_grid and validate_input
 		○ If self.finished is True, executes create_grid method
     
-	• validate_input: (Takes no parameters)
+	• validate_input(takes no parameters):
   
 		○ Takes command input as command 
 		○ If command input is in self.command_options, executes command_manager and uses command as an argument 
 		○ If command input not in self.command_options, executes a print statement
     
-	• command_manager: (Takes 1 parameter as command, arguement passed must be a string
+	• command_manager(takes 1 parameter as command, arguement passed must be a string):
   
 		○ depending on the value of command passed into the method, the method will execute another method with the same name as command
 		○ The only exception is if “DONE” is passed as an argument, command_manager will then change the value of self.finished = True.
 		○ Currently only if the value of command is either “IMPORT” or “EXPORT”, user input is also required and is passed as a variable into the corresponding method.
 			§ “IMPORT” will append a csv into the existing self.inventory_list.
       
-	• help : (Takes no parameters)  
+	• help(takes no parameters): 
   
 		○ Opens the ‘help.txt’ file as a readable object, then prints the entire text.
     
-	• add_item: (Takes no parameters)  
+	• add_item(Takes no parameters):
   
 		○ Takes name as an input
 		○ Creates a boolean checker object and sets it to False
@@ -48,7 +48,7 @@ Methods:
 			§ Appends the value of the create_obj() into self.inventory_list
 			§ create_obj returns a dictionary with the values of all inputs collected
       
-	• update_item: (Takes no parameters) 
+	• update_item(takes no parameters):
   
 		○ Checks if self.inventory_list is empty. If it is, the method will print ‘your list is empty’
 		○ If self.inventory_list is not empty, 
@@ -58,7 +58,7 @@ Methods:
 			§ Checker is set to True
 				□ If checker is still False by the end of the method exception, then the method prints ‘Item not found in list’. 
         
-	• delete_item: (Takes no parameters)  
+	• delete_item(takes no parameters):
   
 		○ Checks if self.inventory_list is empty
 			§ if list is empty, returns the string 'There is nothing to delete'
@@ -66,13 +66,13 @@ Methods:
 			§ if input_val is equal to the 'name' value of the dictionary, method will delete entire dictionary from self.inventoy_list and return 'Successfully deleted'
 			§ if input_val does not match the 'name' value of any dictionaries in self.inventory_list, method will return 'Item not found in list' 
       
-	• clear_items: (Takes no parameters)  
+	• clear_items(takes no parameters):
   
 		○ Checks if self.inventory_list is empty:
 			§ if list is empty, method will return 'List is already empty'
 			§ if list is not empty, method will set value of self.inventory_list to an empty list, and return 'cleared successfully' as a string
       
-	• sum_of_items: (Takes no paramters)
+	• sum_of_items(takes no paramters):
   
 		○ Creates local intvariable 'total' and sets the value to 0
 		○ iterates through each dictionary in self.inventory_list
@@ -80,7 +80,7 @@ Methods:
 			§ calculates the price * quantity and adds the sum to 'total'
 			§ rounds 'total' two places passed the decimal point, and returns a string with 'total'
       
-	• csv_file_reader: (Takes 1 str parameter as 'answ')
+	• csv_file_reader(takes 1 str parameter as 'answ')
   
 		○ Creates two local variables; new_list and new_dict_list. Both are set to empty lists
 		○ opens csv file using 'answ' as the destination
